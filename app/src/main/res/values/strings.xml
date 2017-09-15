@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Books</string>
     <string name="button_add">add</string>
+    <string name="title_book">Title</string>
+    <string name="author_book">Author</string>
+    <string name="date_book">Date</string>
+    <string name="publication_book">Publication</string>
+
 </resources>
