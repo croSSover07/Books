@@ -22,7 +22,6 @@ class BookListFragment:Fragment(){
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        return inflater.inflate(R.layout.fragment_book_list,container,false)
         val rootView = inflater.inflate(R.layout.fragment_book_list, container, false)
 
         buttonAdd=rootView.findViewById(R.id.button_add)
