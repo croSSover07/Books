@@ -23,16 +23,11 @@ class BookListFragment:Fragment(){
 
     private val mainActivity: MainActivity? get() = activity as? MainActivity
 
-    //private var booksList
+
 
     private lateinit var bookAdapter: BookAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
-
-
     }
 
 
@@ -44,12 +39,13 @@ class BookListFragment:Fragment(){
             val fragment=NewBookFragment.newInstance()
             mainActivity?.replaceMainFragment(fragment,true)
         }
-         var booksList=BooksListJava.get(activity)
+        val booksList=BooksListJava.get(activity)
 
         bookAdapter= BookAdapter(booksList.getmList(),context)
 
         recyclerView=rootView.findViewById(R.id.recyclerView)
         recyclerView.layoutManager=LinearLayoutManager(context)
+        recyclerView.adapter=bookAdapter
 
 
 

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class BooksListJava {
     private static BooksListJava sBooksListJava;
-
+    private List<Book> mList;
     public List<Book> getmList() {
         return mList;
     }
@@ -20,7 +20,7 @@ public class BooksListJava {
         this.mList = mList;
     }
 
-    private List<Book> mList;
+
     public static BooksListJava get(Context context) {
         if (sBooksListJava == null) {
             sBooksListJava = new BooksListJava(context);
@@ -29,5 +29,8 @@ public class BooksListJava {
     }
     private BooksListJava(Context context) {
         mList=new ArrayList<>();
+    }
+    public void addBook(Book book){
+        mList.add(book);
     }
 }
