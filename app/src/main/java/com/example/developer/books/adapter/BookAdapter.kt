@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.developer.books.R
+import com.example.developer.books.fragment.NewBookFragment
 import com.example.developer.books.model.Book
 
 /**
@@ -33,7 +34,7 @@ class BookAdapter(private  val listBook:List<Book>, private val mContext:Context
     override fun onBindViewHolder(holder: BookViewHolder?, position: Int) {
         holder!!.txtTitle.text=listBook[position].title
         holder!!.txtAuthor.text=listBook[position].author
-        holder!!.txtDate.text=listBook[position].date.toString()
+        holder!!.txtDate.text=NewBookFragment.dateToString( listBook[position].date )
         holder!!.txtPub.text=listBook[position].publication
     }
 }

@@ -16,9 +16,7 @@ public class BooksListJava {
         return mList;
     }
 
-    public void setmList(List<Book> mList) {
-        this.mList = mList;
-    }
+
 
 
     public static BooksListJava get(Context context) {

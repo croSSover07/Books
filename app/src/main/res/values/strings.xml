@@ -7,5 +7,8 @@
     <string name="publication_book">Publication</string>
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
+    <string name="date_picker_title">Date</string>
+    <string name="button_change_date">Change</string>
+
 
 </resources>
