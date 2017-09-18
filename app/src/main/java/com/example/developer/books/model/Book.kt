@@ -6,4 +6,4 @@ import java.util.*
 /**
  * Created by developer on 15.09.17.
  */
-class Book (val title: String?, val author: String?,val date:Date,val publicationL:String?):Serializable
+class Book (val title: String?, val author: String?,val date:Date,val publication:String?):Serializable

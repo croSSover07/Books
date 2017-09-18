@@ -32,13 +32,22 @@ class BookAdapter(private  val listBook:List<Book>, private val mContext:Context
 
     override fun onBindViewHolder(holder: BookViewHolder?, position: Int) {
         holder!!.txtTitle.text=listBook[position].title
+        holder!!.txtAuthor.text=listBook[position].author
+        holder!!.txtDate.text=listBook[position].date.toString()
+        holder!!.txtPub.text=listBook[position].publication
     }
 }
 
 class BookViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
     var txtTitle: TextView
+    var txtAuthor: TextView
+    var txtDate: TextView
+    var txtPub: TextView
     init{
         txtTitle=itemView.findViewById(R.id.textView_title_row)
+        txtAuthor=itemView.findViewById(R.id.textView_author_row)
+        txtDate=itemView.findViewById(R.id.textView_date_row)
+        txtPub=itemView.findViewById(R.id.textView_pub_row)
     }
 
 }
