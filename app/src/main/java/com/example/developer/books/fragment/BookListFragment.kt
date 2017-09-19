@@ -1,70 +1,83 @@
 package com.example.developer.books.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import com.example.developer.books.MainActivity
 import com.example.developer.books.R
 import com.example.developer.books.adapter.BookAdapter
-import com.example.developer.books.model.BooksListJava
+import com.example.developer.books.model.Book
+import java.util.*
 
-class BookListFragment:Fragment(){
-    private var buttonAdd:Button?=null
-    private lateinit var recyclerView:RecyclerView
+class BookListFragment : Fragment() {
 
+    private lateinit var recyclerView: RecyclerView
     private val mainActivity: MainActivity? get() = activity as? MainActivity
-
-
-
     private lateinit var bookAdapter: BookAdapter
-    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState)
 
+    companion object {
+        private val TAG = "BookList"
+        private const val REQUEST_BOOK = 0
+        const val KEY_ITEMS = "key_items"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("-----" + TAG, "OnCreate")
+        if (savedInstanceState != null) bookAdapter = BookAdapter(savedInstanceState.getParcelableArrayList(KEY_ITEMS))
+        else {
+            bookAdapter = BookAdapter(null)
+        }
+
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_book_list, container, false)
+        Log.d("-----" + TAG, "OnCreateView")
+        return inflater.inflate(R.layout.fragment_book_list, container, false)
+    }
 
-        buttonAdd=rootView.findViewById(R.id.button_add)
-        buttonAdd?.setOnClickListener {
-            val fragment=NewBookFragment.newInstance()
-            mainActivity?.replaceMainFragment(fragment,true)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("-----" + TAG, "onViewCreated")
+        view.findViewById<View>(R.id.button_add)?.setOnClickListener {
+            val a = NewBookFragment.newInstance()
+            a.setTargetFragment(this@BookListFragment, REQUEST_BOOK)
+            mainActivity?.replaceMainFragment(a, true)
         }
-        val booksList=BooksListJava.get()
-
-        bookAdapter= BookAdapter(booksList.getmList(),context)
-
-        recyclerView=rootView.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager=LinearLayoutManager(context)
-        recyclerView.adapter=bookAdapter
-
-
-
-
-        return rootView
+        recyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = bookAdapter
     }
 
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            BookListFragment.REQUEST_BOOK -> {
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+                        val book = data.extras[NewBookFragment.EXTRA_BOOK] as? Book ?: return
+                        bookAdapter.addBook(book)
+                        bookAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+            else -> super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        Log.d("-----" + TAG, "onSaveInstanceState")
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(KEY_ITEMS, ArrayList(bookAdapter.listBook))
+
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

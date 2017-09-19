@@ -12,10 +12,11 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if(fragmentInContainer(R.id.frame_layout)==null){
+        if (fragmentInContainer(R.id.frame_layout) == null) {
             replaceFragment(R.id.frame_layout, BookListFragment())
         }
     }
+
     fun replaceMainFragment(fragment: Fragment, addToBackStack: Boolean = false, backStackName: String? = null) =
             replaceFragment(R.id.frame_layout, fragment, addToBackStack, backStackName)
 }
