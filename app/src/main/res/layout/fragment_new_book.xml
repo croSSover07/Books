@@ -26,7 +26,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/title_book" />
+                    android:text="@string/title_book"
+                    android:labelFor="@+id/editText_title_book"/>
 
                 <EditText
                     android:id="@+id/editText_title_book"
@@ -34,9 +35,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+
                     android:inputType="textPersonName"
-                    android:freezesText="true"
-                     />
+                    android:freezesText="true" />
             </LinearLayout>
 
             <LinearLayout
@@ -58,7 +59,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:freezesText="true"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    tools:ignore="LabelFor" />
             </LinearLayout>
 
             <LinearLayout
@@ -72,14 +74,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="@string/date_book"
-                    android:layout_marginRight="16dp"/>
+                    android:layout_marginEnd="16dp"/>
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:freezesText="true"
                     android:text="" />
 
@@ -110,6 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:labelFor="@+id/editText_publication_book"
                     android:inputType="textPersonName"
                     android:freezesText="true"
                      />

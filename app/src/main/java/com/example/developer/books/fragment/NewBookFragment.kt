@@ -17,11 +17,6 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-
-/**
- * Created by developer on 15.09.17.
- */
 class NewBookFragment: Fragment(){
     private lateinit var buttonSave:Button
     private lateinit var buttonCancel:Button
@@ -29,10 +24,7 @@ class NewBookFragment: Fragment(){
     companion object {
         private val DIALOG_DATE = "DialogDate"
         private val  REQUEST_DATE = 0
-        fun newInstance( ): NewBookFragment {
-            val fragment = NewBookFragment()
-            return fragment
-        }
+        fun newInstance( ): NewBookFragment = NewBookFragment()
 
         fun stringToDate(dateString:String):Date? {
             val format = SimpleDateFormat("MMM dd yyyy", Locale.ENGLISH) as DateFormat
@@ -40,8 +32,7 @@ class NewBookFragment: Fragment(){
             var startDate:Date?=null
             try {
                 startDate = format.parse(dateString)
-            }
-            finally {
+            } finally {
                 return startDate
             }
         }
@@ -51,16 +42,14 @@ class NewBookFragment: Fragment(){
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView= inflater.inflate(R.layout.fragment_new_book,container,false)
         buttonSave=rootView.findViewById(R.id.save_button)
         buttonCancel=rootView.findViewById(R.id.cancel_button)
         textViewDate=rootView.findViewById(R.id.textView4)
-        buttonSave!!.setOnClickListener {
+        buttonSave.setOnClickListener {
             val title=rootView.findViewById<EditText>(R.id.editText_title_book).text.toString()
             val author=rootView.findViewById<EditText>(R.id.editText_author_book).text.toString()
             val date=stringToDate( textViewDate.text.toString())
@@ -70,12 +59,12 @@ class NewBookFragment: Fragment(){
                     && title.trim().isNotEmpty()
                     && author.trim().isNotEmpty()
                     && pub.trim().isNotEmpty()){
-                val a = BooksListJava.get(context)
+                val a = BooksListJava.get()
                 a.addBook(Book(title, author, date, pub))
                 activity.supportFragmentManager.popBackStack()
             }
         }
-        buttonCancel!!.setOnClickListener {
+        buttonCancel.setOnClickListener {
             activity.supportFragmentManager.popBackStack()
         }
 

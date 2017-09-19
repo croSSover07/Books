@@ -16,7 +16,6 @@ class MainActivity : BaseActivity() {
             replaceFragment(R.id.frame_layout, BookListFragment())
         }
     }
-    fun replaceMainFragment(fragment: Fragment, addToBackStack: Boolean = false, backStackName: String? = null) {
-        replaceFragment(R.id.frame_layout, fragment, addToBackStack, backStackName)
-    }
+    fun replaceMainFragment(fragment: Fragment, addToBackStack: Boolean = false, backStackName: String? = null) =
+            replaceFragment(R.id.frame_layout, fragment, addToBackStack, backStackName)
 }

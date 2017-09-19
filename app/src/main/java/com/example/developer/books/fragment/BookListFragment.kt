@@ -13,10 +13,6 @@ import com.example.developer.books.R
 import com.example.developer.books.adapter.BookAdapter
 import com.example.developer.books.model.BooksListJava
 
-/**
- * Created by developer on 15.09.17.
- */
-
 class BookListFragment:Fragment(){
     private var buttonAdd:Button?=null
     private lateinit var recyclerView:RecyclerView
@@ -26,9 +22,7 @@ class BookListFragment:Fragment(){
 
 
     private lateinit var bookAdapter: BookAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState)
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,7 +33,7 @@ class BookListFragment:Fragment(){
             val fragment=NewBookFragment.newInstance()
             mainActivity?.replaceMainFragment(fragment,true)
         }
-        val booksList=BooksListJava.get(activity)
+        val booksList=BooksListJava.get()
 
         bookAdapter= BookAdapter(booksList.getmList(),context)
 

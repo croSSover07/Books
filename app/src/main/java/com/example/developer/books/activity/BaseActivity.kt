@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 
-/**
- * Created by developer on 15.09.17.
- */
 abstract class BaseActivity:AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,9 +14,7 @@ abstract class BaseActivity:AppCompatActivity(){
         }
     }
 
-    fun fragmentInContainer(containerId:Int):Fragment?{
-        return supportFragmentManager.findFragmentById(containerId)
-    }
+    fun fragmentInContainer(containerId:Int):Fragment? = supportFragmentManager.findFragmentById(containerId)
 
     fun replaceFragment(containerId: Int,fragment:Fragment,addToBackStack:Boolean=false,backStackName:String?=null) {
         val transaction=supportFragmentManager.beginTransaction().replace(containerId,fragment)

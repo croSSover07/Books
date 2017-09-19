@@ -1,17 +1,11 @@
 package com.example.developer.books.model;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by developer on 18.09.17.
- */
-
 public class BooksListJava {
     private static BooksListJava sBooksListJava;
-    private List<Book> mList;
+    private final List<Book> mList;
     public List<Book> getmList() {
         return mList;
     }
@@ -19,13 +13,13 @@ public class BooksListJava {
 
 
 
-    public static BooksListJava get(Context context) {
+    public static BooksListJava get() {
         if (sBooksListJava == null) {
-            sBooksListJava = new BooksListJava(context);
+            sBooksListJava = new BooksListJava();
         }
         return sBooksListJava;
     }
-    private BooksListJava(Context context) {
+    private BooksListJava() {
         mList=new ArrayList<>();
     }
     public void addBook(Book book){
