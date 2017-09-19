@@ -23,11 +23,9 @@ import java.util.*
  * Created by developer on 15.09.17.
  */
 class NewBookFragment: Fragment(){
-
     private lateinit var buttonSave:Button
     private lateinit var buttonCancel:Button
     private lateinit var textViewDate:TextView
-
     companion object {
         private val DIALOG_DATE = "DialogDate"
         private val  REQUEST_DATE = 0
@@ -36,14 +34,16 @@ class NewBookFragment: Fragment(){
             return fragment
         }
 
-        fun stringToDate(dateString:String):Date{
-
+        fun stringToDate(dateString:String):Date? {
             val format = SimpleDateFormat("MMM dd yyyy", Locale.ENGLISH) as DateFormat
-
             // val df = SimpleDateFormat("EEE MMM dd HH:mm:ss z YYYY")
-
-            val startDate = format.parse(dateString)
-            return startDate
+            var startDate:Date?=null
+            try {
+                startDate = format.parse(dateString)
+            }
+            finally {
+                return startDate
+            }
         }
         fun dateToString(date:Date):String{
             val format = SimpleDateFormat("MMM dd YYYY", Locale.ENGLISH)
@@ -61,13 +61,19 @@ class NewBookFragment: Fragment(){
         buttonCancel=rootView.findViewById(R.id.cancel_button)
         textViewDate=rootView.findViewById(R.id.textView4)
         buttonSave!!.setOnClickListener {
-            val a=BooksListJava.get(context)
-            val title=rootView.findViewById<EditText>(R.id.editText_title_book).text
-            val author=rootView.findViewById<EditText>(R.id.editText_author_book).text
+            val title=rootView.findViewById<EditText>(R.id.editText_title_book).text.toString()
+            val author=rootView.findViewById<EditText>(R.id.editText_author_book).text.toString()
             val date=stringToDate( textViewDate.text.toString())
-            val pub=rootView.findViewById<EditText>(R.id.editText_publication_book).text
-            a.addBook(Book(title.toString(),author.toString(), date,pub.toString()))
-            activity.supportFragmentManager.popBackStack()
+            val pub=rootView.findViewById<EditText>(R.id.editText_publication_book).text.toString()
+
+            if (date!=null
+                    && title.trim().isNotEmpty()
+                    && author.trim().isNotEmpty()
+                    && pub.trim().isNotEmpty()){
+                val a = BooksListJava.get(context)
+                a.addBook(Book(title, author, date, pub))
+                activity.supportFragmentManager.popBackStack()
+            }
         }
         buttonCancel!!.setOnClickListener {
             activity.supportFragmentManager.popBackStack()

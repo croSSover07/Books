@@ -19,17 +19,13 @@ import java.util.*
  * Created by developer on 18.09.17.
  */
 class DatePickerFragment:DialogFragment() {
-
     private var mDatePicker: DatePicker? = null
-
     companion object {
         val EXTRA_DATE = "date"
         fun newInstance(): DatePickerFragment {
-
             return DatePickerFragment()
         }
     }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val v = LayoutInflater.from(activity)
                 .inflate(R.layout.dialog_date, null)
@@ -37,7 +33,7 @@ class DatePickerFragment:DialogFragment() {
         return AlertDialog.Builder(activity)
                 .setView(v)
                 .setTitle(R.string.date_picker_title)
-                .setPositiveButton(android.R.string.ok,DialogInterface.OnClickListener { dialogInterface, i ->
+                .setPositiveButton(android.R.string.ok,DialogInterface.OnClickListener { _, _ ->
                     val year = mDatePicker!!.getYear()
                     val month = mDatePicker!!.getMonth()
                     val day = mDatePicker!!.getDayOfMonth()
