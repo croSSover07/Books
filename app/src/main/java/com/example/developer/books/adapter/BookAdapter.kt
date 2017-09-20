@@ -20,7 +20,7 @@ class BookAdapter(items: List<Book>? = null) : RecyclerView.Adapter<BookViewHold
         val book = listBook[position]
         holder.txtTitle.text = book.title
         holder.txtAuthor.text = book.author
-        holder.txtDate.text = book.date.toString(MMM_D_YYYY)
+        holder.txtDate.text = book.publication + " && " + book.date.toString(MMM_D_YYYY)
     }
 
     fun updateItems(listBook: List<Book>?) {
