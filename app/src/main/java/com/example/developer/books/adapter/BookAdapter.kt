@@ -21,7 +21,6 @@ class BookAdapter(items: List<Book>? = null) : RecyclerView.Adapter<BookViewHold
         holder.txtTitle.text = book.title
         holder.txtAuthor.text = book.author
         holder.txtDate.text = book.date.toString(MMM_D_YYYY)
-        holder.txtPub.text = book.publication
     }
 
     fun updateItems(listBook: List<Book>?) {
