@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -34,29 +32,13 @@ class NewBookFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         textViewDate = view.findViewById(R.id.textView_date)
-        view.findViewById<View>(R.id.save_button)?.setOnClickListener {
-            val title = view.findViewById<EditText>(R.id.editText_title_book).text.toString()
-            val author = view.findViewById<EditText>(R.id.editText_author_book).text.toString()
-            val date = textViewDate.text.toString().toDate(MMM_D_YYYY)
-            val pub = view.findViewById<EditText>(R.id.editText_publication_book).text.toString()
-            if (date != null
-                    && title.trim().isNotEmpty()
-                    && author.trim().isNotEmpty()
-                    && pub.trim().isNotEmpty()) {
-                val book = Book(title, author, date, pub)
-                sendResult(Activity.RESULT_OK, book)
-                activity.supportFragmentManager.popBackStack()
-            }
-        }
-        view.findViewById<View>(R.id.cancel_button)?.setOnClickListener {
-            activity.supportFragmentManager.popBackStack()
-        }
         view.findViewById<Button>(R.id.button_date).setOnClickListener {
             val fm = fragmentManager
             val dialog = DatePickerFragment.newInstance()
             dialog.setTargetFragment(this@NewBookFragment, REQUEST_DATE)
             dialog.show(fm, DIALOG_DATE)
         }
+        setHasOptionsMenu(true)
     }
 
     private fun sendResult(resultCode: Int, book: Book) {
@@ -78,5 +60,33 @@ class NewBookFragment : Fragment() {
             }
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_add_book_fragment, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.save_button -> {
+            val title = view!!.findViewById<EditText>(R.id.editText_title_book).text.toString()
+            val author = view!!.findViewById<EditText>(R.id.editText_author_book).text.toString()
+            val date = textViewDate.text.toString().toDate(MMM_D_YYYY)
+            val pub = view!!.findViewById<EditText>(R.id.editText_publication_book).text.toString()
+            if (date != null
+                    && title.trim().isNotEmpty()
+                    && author.trim().isNotEmpty()
+                    && pub.trim().isNotEmpty()) {
+                val book = Book(title, author, date, pub)
+                sendResult(Activity.RESULT_OK, book)
+                activity.supportFragmentManager.popBackStack()
+            }
+            true
+        }
+        R.id.cancel_button -> {
+            activity.supportFragmentManager.popBackStack()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 }

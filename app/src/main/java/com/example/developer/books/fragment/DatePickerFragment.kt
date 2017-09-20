@@ -23,6 +23,9 @@ class DatePickerFragment : DialogFragment() {
         val dialog = AlertDialog.Builder(activity)
                 .setView(R.layout.dialog_date)
                 .setTitle(R.string.date_picker_title)
+                .setNegativeButton(android.R.string.cancel, { _, _ ->
+                    sendResult(Activity.RESULT_CANCELED, null)
+                })
                 .setPositiveButton(android.R.string.ok, { _, _ ->
                     val year = datePicker.year
                     val month = datePicker.month
@@ -34,7 +37,7 @@ class DatePickerFragment : DialogFragment() {
         return dialog
     }
 
-    private fun sendResult(resultCode: Int, date: Date) {
+    private fun sendResult(resultCode: Int, date: Date?) {
         targetFragment ?: return
         val intent = Intent()
         intent.putExtra(EXTRA_DATE, date)
