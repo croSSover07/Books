@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,11 +23,9 @@ class NewBookFragment : Fragment() {
     private lateinit var textViewDate: TextView
 
     companion object {
-        private val TAG = "NewBook"
         private const val DIALOG_DATE = "DialogDate"
         private const val REQUEST_DATE = 0
         val EXTRA_BOOK = "book"
-
         fun newInstance(): NewBookFragment = NewBookFragment()
     }
 
@@ -37,7 +34,6 @@ class NewBookFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("-----" + TAG, "onViewCreated")
         buttonSave = view.findViewById(R.id.save_button)
         buttonCancel = view.findViewById(R.id.cancel_button)
         textViewDate = view.findViewById(R.id.textView4)
@@ -58,7 +54,6 @@ class NewBookFragment : Fragment() {
         buttonCancel.setOnClickListener {
             activity.supportFragmentManager.popBackStack()
         }
-
         val buttonDate = view.findViewById<Button>(R.id.button_date)
         buttonDate.setOnClickListener {
             val fm = fragmentManager

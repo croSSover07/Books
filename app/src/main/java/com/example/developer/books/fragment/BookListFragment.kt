@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,30 +22,22 @@ class BookListFragment : Fragment() {
     private lateinit var bookAdapter: BookAdapter
 
     companion object {
-        private val TAG = "BookList"
         private const val REQUEST_BOOK = 0
         const val KEY_ITEMS = "key_items"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("-----" + TAG, "OnCreate")
         if (savedInstanceState != null) bookAdapter = BookAdapter(savedInstanceState.getParcelableArrayList(KEY_ITEMS))
         else {
             bookAdapter = BookAdapter(null)
         }
-
-
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Log.d("-----" + TAG, "OnCreateView")
-        return inflater.inflate(R.layout.fragment_book_list, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_book_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("-----" + TAG, "onViewCreated")
         view.findViewById<View>(R.id.button_add)?.setOnClickListener {
             val a = NewBookFragment.newInstance()
             a.setTargetFragment(this@BookListFragment, REQUEST_BOOK)
@@ -56,7 +47,6 @@ class BookListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = bookAdapter
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -75,9 +65,7 @@ class BookListFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        Log.d("-----" + TAG, "onSaveInstanceState")
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(KEY_ITEMS, ArrayList(bookAdapter.listBook))
-
     }
 }

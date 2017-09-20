@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
 
-
 class Book(
         val title: String?,
         val author: String?,
@@ -22,14 +21,12 @@ class Book(
         parcel.writeString(author)
         parcel.writeLong(date.time)
         parcel.writeString(publication)
-
     }
 
     override fun describeContents(): Int = 0
 
     companion object CREATOR : Parcelable.Creator<Book> {
         override fun createFromParcel(parcel: Parcel): Book = Book(parcel)
-
         override fun newArray(size: Int): Array<Book?> = arrayOfNulls(size)
     }
 }

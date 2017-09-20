@@ -32,7 +32,7 @@ class BookAdapter(items: List<Book>? = null) : RecyclerView.Adapter<BookViewHold
         notifyDataSetChanged()
     }
 
-    fun addBook(book:Book){
+    fun addBook(book: Book) {
         listBook.add(book)
         notifyDataSetChanged()
     }
