@@ -16,10 +16,36 @@ import com.example.developer.books.model.Book
 import java.util.*
 
 class BookListFragment : Fragment() {
+//    private lateinit var recyclerView: RecyclerView
+//    private val mainActivity: MainActivity? get() = activity as? MainActivity
+//    private lateinit var bookAdapter: BookAdapter
+
+    /*
+        Переменные лучше всего тоже кидать не в кучу а по смылсу, что бы они разделялись на групы по типам или же по use case`ам.
+
+        Например:
+
+        Отдельно View сгруппированные вместе
+        private lateinit var userNameTextView: TitleView
+        private lateinit var userSurnameTextView: TextView
+        private lateinit var recyclerView: RecyclerView
+
+        Отдельно адаптер
+        private lateinit var adapter: RecyclerViewAdapter
+
+        Отдельно модель
+        private lateinit var user: User
+
+        Computed property тоже отдельно
+        private val mainActivity: MainActivity? get() = activity as? MainActivity
+
+     */
 
     private lateinit var recyclerView: RecyclerView
-    private val mainActivity: MainActivity? get() = activity as? MainActivity
+
     private lateinit var bookAdapter: BookAdapter
+
+    private val mainActivity: MainActivity? get() = activity as? MainActivity
 
     companion object {
         private const val REQUEST_BOOK = 0
@@ -28,10 +54,18 @@ class BookListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+/*
         if (savedInstanceState != null) bookAdapter = BookAdapter(savedInstanceState.getParcelableArrayList(KEY_ITEMS))
         else {
             bookAdapter = BookAdapter(null)
         }
+
+        По if {} else {}: если пишешь в одну строку то все должно быть в одну строку например:
+        bookAdapter = if (savedInstanceState == null) BookAdapter(null) else BookAdapter(savedInstanceState.getParcelableArrayList(KEY_ITEMS))
+
+        Если есть возможность упростить код, упрощаем его, чем меньше кода и чем он чище проще в нем ориентироваться и он лучше работает.
+*/
+        bookAdapter = BookAdapter(savedInstanceState?.getParcelableArrayList(KEY_ITEMS))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_book_list, container, false)
@@ -49,7 +83,8 @@ class BookListFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        super.onActivityResult(requestCode, resultCode, data)
+//        Тут super не вызывается, мы вызываем его когда сами не можем захендлить данный request в else блоки when.
+//        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             BookListFragment.REQUEST_BOOK -> {
                 when (resultCode) {

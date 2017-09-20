@@ -14,7 +14,7 @@ class DatePickerFragment : DialogFragment() {
     private lateinit var datePicker: DatePicker
 
     companion object {
-        val EXTRA_DATE = "date"
+        const val EXTRA_DATE = "date"
         fun newInstance() = DatePickerFragment()
     }
 
@@ -28,9 +28,11 @@ class DatePickerFragment : DialogFragment() {
                     val day = datePicker.dayOfMonth
                     val date = GregorianCalendar(year, month, day).time
                     sendResult(Activity.RESULT_OK, date)
-                })
-                .create()
-        dialog.show()
+                }).show()
+//        TODO: Можно опустить вызов create(), так как show так же возвращает инстанс созданного диалога
+//                .create()
+//        dialog.show()
+
         datePicker = dialog.findViewById(R.id.dialog_datepicker) as DatePicker
         return dialog
     }

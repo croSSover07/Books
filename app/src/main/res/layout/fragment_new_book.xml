@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- TODO: много личшних пустых строк -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- TODO: не лучший подход для использования ScrollView, а точнее не правильный. -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +22,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
+                <!--
+                    TODO: не должно быть никаких id типа textView,
+                    id должны давать по смыслу e.g. titleTextView, authorTextView
+                -->
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
@@ -35,7 +40,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-
                     android:inputType="textPersonName"
                     android:freezesText="true" />
             </LinearLayout>
@@ -45,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <!-- TODO: id -->
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
@@ -68,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <!-- TODO: id -->
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
@@ -76,6 +82,7 @@
                     android:text="@string/date_book"
                     android:layout_marginEnd="16dp"/>
 
+                <!-- TODO: id -->
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
@@ -116,6 +123,49 @@
                     android:inputType="textPersonName"
                     android:freezesText="true"
                      />
+                <!-- TODO: Отсутствие пустых строк перед закрытием тега -->
+                <!--
+                    Если это закрывающиеся теги, мы ставим пустые строки между ними, если же преде
+                    закрывающимся тегом тег закрытый по умолчанию, то нет.
+
+                    Например:
+
+                     <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="@string/date_book"
+                            android:layout_marginEnd="16dp"/>
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:text="@string/date_book"
+                                android:layout_marginEnd="16dp"/>
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+
+                -->
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
