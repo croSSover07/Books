@@ -18,9 +18,7 @@ import com.example.developer.books.model.Book
 import java.util.*
 
 class NewBookFragment : Fragment() {
-//    TODO: нет необходимости хранить ссылки на них.
-//    private lateinit var buttonSave: Button
-//    private lateinit var buttonCancel: Button
+
     private lateinit var textViewDate: TextView
 
     companion object {
@@ -35,10 +33,7 @@ class NewBookFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        buttonSave = view.findViewById(R.id.save_button)
-//        buttonCancel = view.findViewById(R.id.cancel_button)
-        textViewDate = view.findViewById(R.id.textView4)
-
+        textViewDate = view.findViewById(R.id.textView_date)
         view.findViewById<View>(R.id.save_button)?.setOnClickListener {
             val title = view.findViewById<EditText>(R.id.editText_title_book).text.toString()
             val author = view.findViewById<EditText>(R.id.editText_author_book).text.toString()

@@ -11,6 +11,7 @@ import com.example.developer.books.R
 import java.util.*
 
 class DatePickerFragment : DialogFragment() {
+
     private lateinit var datePicker: DatePicker
 
     companion object {
@@ -29,10 +30,6 @@ class DatePickerFragment : DialogFragment() {
                     val date = GregorianCalendar(year, month, day).time
                     sendResult(Activity.RESULT_OK, date)
                 }).show()
-//        TODO: Можно опустить вызов create(), так как show так же возвращает инстанс созданного диалога
-//                .create()
-//        dialog.show()
-
         datePicker = dialog.findViewById(R.id.dialog_datepicker) as DatePicker
         return dialog
     }

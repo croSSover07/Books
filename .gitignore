@@ -1,17 +1,3 @@
-# TODO: стандартный .gitignore не убирает все файлы которые не стоило бы пушить в удаленный репозиторий.
-
-#*.iml
-#.gradle
-#/local.properties
-#/.idea/workspace.xml
-#/.idea/libraries
-#.DS_Store
-#/build
-#/captures
-#.externalNativeBuild
-
-# TODO: Вот вариант .gitingore`а который стоит использовать.
-
 # Generated files
 bin/
 gen/
@@ -48,3 +34,5 @@ captures/
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+app/libs/
+app/src/main/res/drawable/
