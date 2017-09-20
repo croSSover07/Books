@@ -73,19 +73,19 @@ class NewBookFragment : Fragment() {
             val author = view!!.findViewById<EditText>(R.id.editText_author_book).text.toString()
             val date = textViewDate.text.toString().toDate(MMM_D_YYYY)
             val pub = view!!.findViewById<EditText>(R.id.editText_publication_book).text.toString()
-            val des=view!!.findViewById<EditText>(R.id.editText_description_book).text.toString()
+            val des = view!!.findViewById<EditText>(R.id.editText_description_book).text.toString()
             if (date != null
                     && title.trim().isNotEmpty()
                     && author.trim().isNotEmpty()
                     && pub.trim().isNotEmpty()
                     && des.trim().isNotEmpty()) {
-                val book = Book(title, author, date, pub,des)
+                val book = Book(title, author, date, pub, des)
                 sendResult(Activity.RESULT_OK, book)
                 activity.supportFragmentManager.popBackStack()
             }
             true
         }
-        R.id.cancel_button -> {
+        android.R.id.home -> {
             activity.supportFragmentManager.popBackStack()
             true
         }
