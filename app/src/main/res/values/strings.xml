@@ -9,6 +9,7 @@
     <string name="cancel_button">Cancel</string>
     <string name="date_picker_title">Date</string>
     <string name="button_change_date">Change</string>
+    <string name="add_book">Add book</string>
 
 
 </resources>

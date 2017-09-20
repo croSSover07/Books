@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.example.developer.books.MainActivity
 import com.example.developer.books.R
 import com.example.developer.books.adapter.BookAdapter
@@ -37,14 +35,10 @@ class BookListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<View>(R.id.button_add)?.setOnClickListener {
-            val a = NewBookFragment.newInstance()
-            a.setTargetFragment(this@BookListFragment, REQUEST_BOOK)
-            mainActivity?.replaceMainFragment(a, true)
-        }
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = bookAdapter
+        setHasOptionsMenu(true)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -60,6 +54,21 @@ class BookListFragment : Fragment() {
             }
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.options_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menu_add_book -> {
+            val a = NewBookFragment.newInstance()
+            a.setTargetFragment(this@BookListFragment, REQUEST_BOOK)
+            mainActivity?.replaceMainFragment(a, true)
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
