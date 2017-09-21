@@ -23,4 +23,5 @@ abstract class BaseActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+
 }
