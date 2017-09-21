@@ -2,9 +2,8 @@ package com.example.developer.books.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.app.AppCompatActivity
+import android.view.*
 import android.widget.TextView
 import com.example.developer.books.R
 import com.example.developer.books.model.Book
@@ -28,6 +27,25 @@ class DescriptionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         view.findViewById<TextView>(R.id.textView_description).text = (arguments[KEY_BOOK] as Book).description
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu?.clear()
+        if (this.activity.findViewById<View>(R.id.main_frame_layout) == null) {
+            (activity as AppCompatActivity).supportActionBar?.title = (arguments[KEY_BOOK] as Book).title
+            (activity as AppCompatActivity).supportActionBar?.subtitle = (arguments[KEY_BOOK] as Book).author
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+
+        android.R.id.home -> {
+            activity.supportFragmentManager.popBackStack()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -62,7 +63,9 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_options, menu)
         bookAdapter.notifyDataSetChanged()
-        mainActivity?.setTitle(R.string.title_books_list_fragment)
+        (mainActivity as AppCompatActivity).supportActionBar?.setTitle(R.string.title_books_list_fragment)
+        (mainActivity as AppCompatActivity).supportActionBar?.subtitle = null
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {

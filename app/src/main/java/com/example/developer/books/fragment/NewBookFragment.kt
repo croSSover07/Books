@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
@@ -68,7 +69,8 @@ class NewBookFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu?.clear()
         inflater.inflate(R.menu.menu_add_book_fragment, menu)
-        activity.setTitle(R.string.title_new_book_fragment)
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.title_new_book_fragment)
+        (activity as AppCompatActivity).supportActionBar?.subtitle = null
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
