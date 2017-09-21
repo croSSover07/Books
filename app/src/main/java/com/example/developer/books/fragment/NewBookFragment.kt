@@ -1,6 +1,7 @@
 package com.example.developer.books.fragment
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -42,7 +43,7 @@ class NewBookFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    private fun sendResult(resultCode: Int, book: Book) {
+    private fun sendResult(resultCode: Int, book: Book?) {
         targetFragment ?: return
         val intent = Intent()
         intent.putExtra(NewBookFragment.EXTRA_BOOK, book)
@@ -72,26 +73,37 @@ class NewBookFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.save_button -> {
-            val title = view!!.findViewById<EditText>(R.id.editText_title_book).text.toString()
-            val author = view!!.findViewById<EditText>(R.id.editText_author_book).text.toString()
-            val date = textViewDate.text.toString().toDate(MMM_D_YYYY)
-            val pub = view!!.findViewById<EditText>(R.id.editText_publication_book).text.toString()
-            val des = view!!.findViewById<EditText>(R.id.editText_description_book).text.toString()
-            if (date != null
-                    && title.trim().isNotEmpty()
-                    && author.trim().isNotEmpty()
-                    && pub.trim().isNotEmpty()
-                    && des.trim().isNotEmpty()) {
-                val book = Book(title, author, date, pub, des)
-                sendResult(Activity.RESULT_OK, book)
+            if (isAnyChange() != null) {
+                sendResult(Activity.RESULT_OK, isAnyChange())
                 activity.supportFragmentManager.popBackStack()
             }
             true
         }
         android.R.id.home -> {
-            activity.supportFragmentManager.popBackStack()
+            AlertDialog.Builder(activity)
+//                    .setTitle("Title")
+                    .setMessage("Discard all changes?")
+                    .setPositiveButton(R.string.erase, { _, _ -> activity.supportFragmentManager.popBackStack() })
+                    .setNegativeButton(R.string.cancel, { _, _ -> })
+                    .show()
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun isAnyChange(): Book? {
+        val title = view!!.findViewById<EditText>(R.id.editText_title_book).text.toString()
+        val author = view!!.findViewById<EditText>(R.id.editText_author_book).text.toString()
+        val date = textViewDate.text.toString().toDate(MMM_D_YYYY)
+        val pub = view!!.findViewById<EditText>(R.id.editText_publication_book).text.toString()
+        val des = view!!.findViewById<EditText>(R.id.editText_description_book).text.toString()
+        when {
+            title.isEmpty() -> return null
+            author.isEmpty() -> return null
+            date == null -> return null
+            pub.isEmpty() -> return null
+            des.isEmpty() -> return null
+            else -> return Book(title, author, date, pub, des)
+        }
     }
 }

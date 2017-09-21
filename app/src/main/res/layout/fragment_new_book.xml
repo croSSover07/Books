@@ -102,7 +102,7 @@
                 android:ems="10"
                 android:freezesText="true"
                 android:inputType="textPersonName"
-                android:labelFor="@+id/editText_publication_book" />
+                tools:ignore="LabelFor" />
         </LinearLayout>
 
         <LinearLayout
@@ -124,7 +124,7 @@
                 android:ems="10"
                 android:freezesText="true"
                 android:inputType="textPersonName"
-                android:labelFor="@+id/editText_description_book" />
+                tools:ignore="LabelFor" />
         </LinearLayout>
 
     </LinearLayout>

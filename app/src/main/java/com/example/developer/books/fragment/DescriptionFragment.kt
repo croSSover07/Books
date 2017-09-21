@@ -12,7 +12,7 @@ import com.example.developer.books.model.Book
 class DescriptionFragment : Fragment() {
     companion object {
         private const val KEY_BOOK = "key_book"
-        const val TAG="DescriptionFragment"
+        const val TAG = "DescriptionFragment"
 
         fun newInstance(book: Book): DescriptionFragment {
             val arguments = Bundle()
