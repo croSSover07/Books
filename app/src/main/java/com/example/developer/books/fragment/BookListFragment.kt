@@ -62,6 +62,7 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_options, menu)
         bookAdapter.notifyDataSetChanged()
+        mainActivity?.setTitle(R.string.title_books_list_fragment)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Books</string>
+    <string name="title_books_list_fragment">Books</string>
+    <string name="title_new_book_fragment">New Book</string>
     <string name="button_add">Add</string>
     <string name="title_book">Title</string>
     <string name="author_book">Author</string>

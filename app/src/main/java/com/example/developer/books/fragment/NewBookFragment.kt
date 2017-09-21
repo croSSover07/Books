@@ -65,7 +65,9 @@ class NewBookFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
+        menu?.clear()
         inflater.inflate(R.menu.menu_add_book_fragment, menu)
+        activity.setTitle(R.string.title_new_book_fragment)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
