@@ -9,11 +9,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.example.developer.books.MainActivity
 import com.example.developer.books.R
+import com.example.developer.books.adapter.BaseAdapter
 import com.example.developer.books.adapter.BookAdapter
 import com.example.developer.books.model.Book
 import java.util.*
 
-class BookListFragment : Fragment() {
+class BookListFragment : Fragment() ,BaseAdapter.ItemClickListener{
 
     private lateinit var recyclerView: RecyclerView
 
@@ -28,7 +29,7 @@ class BookListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bookAdapter = BookAdapter(savedInstanceState?.getParcelableArrayList(KEY_ITEMS))
+        bookAdapter = BookAdapter(this,savedInstanceState?.getParcelableArrayList(KEY_ITEMS))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_book_list, container, false)
@@ -73,6 +74,13 @@ class BookListFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(KEY_ITEMS, ArrayList(bookAdapter.listBook))
+        outState.putParcelableArrayList(KEY_ITEMS, ArrayList(bookAdapter.items))
     }
+    override fun onItemClick(position: Int) {
+        val book = bookAdapter.items[position]
+        val fragment = DescriptionFragment.newInstance(book)
+
+        mainActivity?.replaceMainFragment(fragment, true)
+    }
+
 }

@@ -23,6 +23,5 @@ class MainActivity : BaseActivity() {
             replaceFragment(R.id.frame_layout, fragment, addToBackStack, backStackName)
 
     @LayoutRes
-    protected fun getLayoutResId(): Int {
-        return R.layout.activity_masterdetail    }
+    protected fun getLayoutResId(): Int = R.layout.activity_masterdetail
 }
