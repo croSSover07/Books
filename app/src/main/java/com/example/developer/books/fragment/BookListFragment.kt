@@ -14,7 +14,7 @@ import com.example.developer.books.adapter.BookAdapter
 import com.example.developer.books.model.Book
 import java.util.*
 
-class BookListFragment : Fragment() ,BaseAdapter.ItemClickListener{
+class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
 
@@ -24,12 +24,13 @@ class BookListFragment : Fragment() ,BaseAdapter.ItemClickListener{
 
     companion object {
         private const val REQUEST_BOOK = 0
+        const val TAG = "BookListFragment"
         const val KEY_ITEMS = "key_items"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bookAdapter = BookAdapter(this,savedInstanceState?.getParcelableArrayList(KEY_ITEMS))
+        bookAdapter = BookAdapter(this, savedInstanceState?.getParcelableArrayList(KEY_ITEMS))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_book_list, container, false)
@@ -60,13 +61,14 @@ class BookListFragment : Fragment() ,BaseAdapter.ItemClickListener{
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_options, menu)
+        bookAdapter.notifyDataSetChanged()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menu_add_book -> {
-            val a = NewBookFragment.newInstance()
-            a.setTargetFragment(this@BookListFragment, REQUEST_BOOK)
-            mainActivity?.replaceMainFragment(a, true)
+            val fragment = NewBookFragment.newInstance()
+            fragment.setTargetFragment(this@BookListFragment, REQUEST_BOOK)
+            mainActivity?.replaceMainFragment(fragment, true, NewBookFragment.TAG)
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -76,11 +78,10 @@ class BookListFragment : Fragment() ,BaseAdapter.ItemClickListener{
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(KEY_ITEMS, ArrayList(bookAdapter.items))
     }
+
     override fun onItemClick(position: Int) {
         val book = bookAdapter.items[position]
         val fragment = DescriptionFragment.newInstance(book)
-
-        mainActivity?.replaceMainFragment(fragment, true)
+        mainActivity?.replaceMainFragment(fragment, true, DescriptionFragment.TAG)
     }
-
 }

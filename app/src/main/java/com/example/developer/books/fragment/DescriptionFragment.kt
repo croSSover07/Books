@@ -9,10 +9,10 @@ import android.widget.TextView
 import com.example.developer.books.R
 import com.example.developer.books.model.Book
 
-
 class DescriptionFragment : Fragment() {
     companion object {
         private const val KEY_BOOK = "key_book"
+        const val TAG="DescriptionFragment"
 
         fun newInstance(book: Book): DescriptionFragment {
             val arguments = Bundle()
@@ -29,6 +29,5 @@ class DescriptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<TextView>(R.id.textView_description).text = (arguments[KEY_BOOK] as Book).description
-        //view
     }
 }

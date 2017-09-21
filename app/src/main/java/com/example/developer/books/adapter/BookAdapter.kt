@@ -8,9 +8,7 @@ import com.example.developer.books.model.Book
 import java.lang.ref.WeakReference
 
 class BookAdapter(listener: ItemClickListener?, items: List<Book>?) : BaseAdapter<BookItemViewHolder, Book>(listener, items) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int, listener: WeakReference<ItemClickListener>?): BookItemViewHolder {
-        return BookItemViewHolder(parent, listener)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int, listener: WeakReference<ItemClickListener>?): BookItemViewHolder = BookItemViewHolder(parent, listener)
 
     override fun onBindViewHolder(holder: BookItemViewHolder, position: Int, item: Book) {
         holder.txtTitle.text = item.title

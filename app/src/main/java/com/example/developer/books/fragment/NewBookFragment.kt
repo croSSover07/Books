@@ -21,6 +21,7 @@ class NewBookFragment : Fragment() {
 
     companion object {
         private const val DIALOG_DATE = "DialogDate"
+        const val TAG = "NewBookFragment"
         private const val REQUEST_DATE = 0
         val EXTRA_BOOK = "book"
         fun newInstance(): NewBookFragment = NewBookFragment()
