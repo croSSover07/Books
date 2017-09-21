@@ -12,7 +12,7 @@ class BookAdapter(listener: ItemClickListener?, items: List<Book>?) : BaseAdapte
 
     override fun onBindViewHolder(holder: BookItemViewHolder, position: Int, item: Book) {
         holder.txtTitle.text = item.title
-        holder.txtDate.text = item.date.toString(MMM_D_YYYY)
+        holder.txtDate.text = item.date.toString(MMM_D_YYYY) + "&&" + item.publication
         holder.txtAuthor.text = item.author
     }
 

@@ -17,7 +17,6 @@ abstract class BaseAdapter<VH : BaseAdapter.ViewHolder, I>(
 
     override fun getItemCount() = items.count()
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = onCreateViewHolder(parent, viewType, listener)
 
     abstract fun onCreateViewHolder(parent: ViewGroup, viewType: Int, listener: WeakReference<ItemClickListener>?): VH
@@ -25,16 +24,6 @@ abstract class BaseAdapter<VH : BaseAdapter.ViewHolder, I>(
     override fun onBindViewHolder(holder: VH, position: Int) = onBindViewHolder(holder, position, items[position])
 
     abstract fun onBindViewHolder(holder: VH, position: Int, item: I)
-
-    fun updateItems(items: List<I>?) {
-        this.items.clear()
-
-        if (items != null && items.isNotEmpty()) {
-            this.items.addAll(items)
-        }
-
-        notifyDataSetChanged()
-    }
 
     interface ItemClickListener {
         fun onItemClick(position: Int)

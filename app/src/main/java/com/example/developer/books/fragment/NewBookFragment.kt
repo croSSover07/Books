@@ -81,7 +81,6 @@ class NewBookFragment : Fragment() {
         }
         android.R.id.home -> {
             AlertDialog.Builder(activity)
-//                    .setTitle("Title")
                     .setMessage("Discard all changes?")
                     .setPositiveButton(R.string.erase, { _, _ -> activity.supportFragmentManager.popBackStack() })
                     .setNegativeButton(R.string.cancel, { _, _ -> })
@@ -97,13 +96,13 @@ class NewBookFragment : Fragment() {
         val date = textViewDate.text.toString().toDate(MMM_D_YYYY)
         val pub = view!!.findViewById<EditText>(R.id.editText_publication_book).text.toString()
         val des = view!!.findViewById<EditText>(R.id.editText_description_book).text.toString()
-        when {
-            title.isEmpty() -> return null
-            author.isEmpty() -> return null
-            date == null -> return null
-            pub.isEmpty() -> return null
-            des.isEmpty() -> return null
-            else -> return Book(title, author, date, pub, des)
+        return when {
+            title.isEmpty() -> null
+            author.isEmpty() -> null
+            date == null -> null
+            pub.isEmpty() -> null
+            des.isEmpty() -> null
+            else -> Book(title, author, date, pub, des)
         }
     }
 }
