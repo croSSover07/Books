@@ -19,6 +19,10 @@ import java.util.*
 class NewBookFragment : Fragment() {
 
     private lateinit var textViewDate: EditText
+    private lateinit var textViewTitle: EditText
+    private lateinit var textViewAuthor: EditText
+    private lateinit var textViewPublication: EditText
+    private lateinit var textViewDescription: EditText
 
     companion object {
         private const val DIALOG_DATE = "DialogDate"
@@ -26,6 +30,11 @@ class NewBookFragment : Fragment() {
         private const val REQUEST_DATE = 0
         val EXTRA_BOOK = "book"
         fun newInstance(): NewBookFragment = NewBookFragment()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -40,9 +49,10 @@ class NewBookFragment : Fragment() {
             dialog.setTargetFragment(this@NewBookFragment, REQUEST_DATE)
             dialog.show(fm, DIALOG_DATE)
         }
-        // TODO: Данный метод должен вызываться ранее. See https://stackoverflow.com/questions/8308695/android-options-menu-in-fragment?answertab=active#tab-top
-        // TODO: Не забудь исправить и в других фрагментах.
-        setHasOptionsMenu(true)
+        textViewTitle = view.findViewById(R.id.editText_title_book)
+        textViewAuthor = view.findViewById(R.id.editText_author_book)
+        textViewPublication = view.findViewById(R.id.editText_publication_book)
+        textViewDescription = view.findViewById(R.id.editText_description_book)
     }
 
     private fun sendResult(resultCode: Int, book: Book?) {
@@ -68,28 +78,32 @@ class NewBookFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        // TODO: Не очень хороший вариант, поищи лучшее решение для данной задачи.
-        // TODO: Поищи другой способ менеджинга айтемами.
         menu?.clear()
-        inflater.inflate(R.menu.menu_add_book_fragment, menu)
-        // TODO: Избавится от лишнего class cats.
-        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.title_new_book_fragment)
-        (activity as AppCompatActivity).supportActionBar?.subtitle = null
+        inflater.inflate(R.menu.menu_options, menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        super.onPrepareOptionsMenu(menu)
+        menu?.findItem(R.id.menu_add_book)?.isVisible = false
+        menu?.findItem(R.id.save_button)?.isVisible = true
+
+        val appCompatActivity = activity as AppCompatActivity
+        appCompatActivity.supportActionBar?.setTitle(R.string.title_new_book_fragment)
+        appCompatActivity.supportActionBar?.subtitle = null
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.save_button -> {
-            // TODO: isAnyChange() - подумай почему неправильно используется этот метод.
-            if (isAnyChange() != null) {
-                sendResult(Activity.RESULT_OK, isAnyChange())
+            val book = isAnyChange()
+            if (book != null) {
+                sendResult(Activity.RESULT_OK, book)
                 activity.supportFragmentManager.popBackStack()
             }
             true
         }
         android.R.id.home -> {
             AlertDialog.Builder(activity)
-                    // TODO: Выноси строки в ресурсы.
-                    .setMessage("Discard all changes?")
+                    .setMessage(getString(R.string.alert_question))
                     .setPositiveButton(R.string.erase, { _, _ -> activity.supportFragmentManager.popBackStack() })
                     .setNegativeButton(R.string.cancel, { _, _ -> })
                     .show()
@@ -99,21 +113,18 @@ class NewBookFragment : Fragment() {
     }
 
     private fun isAnyChange(): Book? {
-        // TODO: 1-е лишние вызовы findViewById
-        // TODO: 2-е использование unsafe unwrap - view!!
-        val title = view!!.findViewById<EditText>(R.id.editText_title_book).text.toString()
-        val author = view!!.findViewById<EditText>(R.id.editText_author_book).text.toString()
+        val title = textViewTitle.text.toString()
+        val author = textViewAuthor.text.toString()
         val date = textViewDate.text.toString().toDate(MMM_D_YYYY)
-        // TODO: Лучше не делать такие сокращения, переменные должны четко отображать их смысл
-        val pub = view!!.findViewById<EditText>(R.id.editText_publication_book).text.toString()
-        val des = view!!.findViewById<EditText>(R.id.editText_description_book).text.toString()
+        val publication = textViewPublication.text.toString()
+        val description = textViewDescription.text.toString()
         return when {
             title.isEmpty() -> null
             author.isEmpty() -> null
             date == null -> null
-            pub.isEmpty() -> null
-            des.isEmpty() -> null
-            else -> Book(title, author, date, pub, des)
+            publication.isEmpty() -> null
+            description.isEmpty() -> null
+            else -> Book(title, author, date, publication, description)
         }
     }
 }

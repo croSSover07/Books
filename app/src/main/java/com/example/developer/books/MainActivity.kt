@@ -2,7 +2,6 @@ package com.example.developer.books
 
 
 import android.os.Bundle
-import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import com.example.developer.books.activity.BaseActivity
 import com.example.developer.books.fragment.BookListFragment
@@ -12,7 +11,7 @@ import com.example.developer.books.fragment.NewBookFragment
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutResId())
+
         if (fragmentInContainer(R.id.frame_layout) == null) {
             replaceFragment(R.id.frame_layout, BookListFragment())
         }
@@ -33,8 +32,4 @@ class MainActivity : BaseActivity() {
             replaceFragment(R.id.frame_layout, fragment, addToBackStack, backStackName)
         }
     }
-
-    // TODO: Неплохое решение, имеет смысл вынести его в BaseActivity и выполнять setContentView(getLayoutResId()) там.
-    @LayoutRes
-    private fun getLayoutResId(): Int = R.layout.activity_masterdetail
 }

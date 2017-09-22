@@ -34,6 +34,7 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bookAdapter = BookAdapter(this, savedInstanceState?.getParcelableArrayList(KEY_ITEMS))
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_book_list, container, false)
@@ -43,10 +44,7 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = bookAdapter
-        // TODO: LinearLayoutManager(context).orientation) - зачем это тут??
-        // TODO: Посмотри документацию конструктора DividerItemDecoration!
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, LinearLayoutManager(context).orientation))
-        setHasOptionsMenu(true)
+        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -55,8 +53,7 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         val book = data.extras[NewBookFragment.EXTRA_BOOK] as? Book ?: return
-                        bookAdapter.addBook(book)
-                        bookAdapter.notifyDataSetChanged()
+                        bookAdapter.addBook(book, false)
                     }
                 }
             }
@@ -68,10 +65,16 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_options, menu)
         // TODO: Для чего данный вызов notifyDataSetChanged?
-        bookAdapter.notifyDataSetChanged()
-        (mainActivity as AppCompatActivity).supportActionBar?.setTitle(R.string.title_books_list_fragment)
-        (mainActivity as AppCompatActivity).supportActionBar?.subtitle = null
+         bookAdapter.notifyDataSetChanged()
+    }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.menu_add_book).isVisible = true
+        menu.findItem(R.id.save_button).isVisible=false
+        val appCompatActivity=mainActivity as AppCompatActivity
+        appCompatActivity.supportActionBar?.setTitle(R.string.title_books_list_fragment)
+        appCompatActivity.supportActionBar?.subtitle = null
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {

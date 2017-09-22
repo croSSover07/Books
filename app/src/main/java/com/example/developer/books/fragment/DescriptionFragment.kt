@@ -22,26 +22,30 @@ class DescriptionFragment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_description, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
         view.findViewById<TextView>(R.id.textView_description).text = (arguments[KEY_BOOK] as Book).description
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        super.onPrepareOptionsMenu(menu)
         if (this.activity.findViewById<View>(R.id.main_frame_layout) == null) {
             if (activity.currentFocus == null) {
-                (activity as AppCompatActivity).supportActionBar?.title = (arguments[KEY_BOOK] as Book).title
-                (activity as AppCompatActivity).supportActionBar?.subtitle = (arguments[KEY_BOOK] as Book).author
+                val appCompatActivity=activity as AppCompatActivity
+                appCompatActivity.supportActionBar?.title = (arguments[KEY_BOOK] as Book).title
+                appCompatActivity.supportActionBar?.subtitle = (arguments[KEY_BOOK] as Book).author
             }
         }
     }
 
-    // TODO: Пустая строка.
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
 
         android.R.id.home -> {

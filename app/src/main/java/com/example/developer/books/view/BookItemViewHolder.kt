@@ -1,5 +1,4 @@
-// TODO: Пакеты всегла именуються с маленькой буквы, но никак не с Большой.
-package com.example.developer.books.View
+package com.example.developer.books.view
 
 import android.view.ViewGroup
 import android.widget.TextView
