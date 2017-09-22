@@ -41,6 +41,7 @@ class DescriptionFragment : Fragment() {
         }
     }
 
+    // TODO: Пустая строка.
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
 
         android.R.id.home -> {

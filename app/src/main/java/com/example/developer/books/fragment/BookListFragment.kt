@@ -43,6 +43,8 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = bookAdapter
+        // TODO: LinearLayoutManager(context).orientation) - зачем это тут??
+        // TODO: Посмотри документацию конструктора DividerItemDecoration!
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, LinearLayoutManager(context).orientation))
         setHasOptionsMenu(true)
     }
@@ -65,6 +67,7 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_options, menu)
+        // TODO: Для чего данный вызов notifyDataSetChanged?
         bookAdapter.notifyDataSetChanged()
         (mainActivity as AppCompatActivity).supportActionBar?.setTitle(R.string.title_books_list_fragment)
         (mainActivity as AppCompatActivity).supportActionBar?.subtitle = null

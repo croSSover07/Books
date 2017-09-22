@@ -34,6 +34,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    // TODO: Неплохое решение, имеет смысл вынести его в BaseActivity и выполнять setContentView(getLayoutResId()) там.
     @LayoutRes
     private fun getLayoutResId(): Int = R.layout.activity_masterdetail
 }

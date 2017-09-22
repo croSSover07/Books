@@ -40,6 +40,8 @@ class NewBookFragment : Fragment() {
             dialog.setTargetFragment(this@NewBookFragment, REQUEST_DATE)
             dialog.show(fm, DIALOG_DATE)
         }
+        // TODO: Данный метод должен вызываться ранее. See https://stackoverflow.com/questions/8308695/android-options-menu-in-fragment?answertab=active#tab-top
+        // TODO: Не забудь исправить и в других фрагментах.
         setHasOptionsMenu(true)
     }
 
@@ -66,14 +68,18 @@ class NewBookFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
+        // TODO: Не очень хороший вариант, поищи лучшее решение для данной задачи.
+        // TODO: Поищи другой способ менеджинга айтемами.
         menu?.clear()
         inflater.inflate(R.menu.menu_add_book_fragment, menu)
+        // TODO: Избавится от лишнего class cats.
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.title_new_book_fragment)
         (activity as AppCompatActivity).supportActionBar?.subtitle = null
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.save_button -> {
+            // TODO: isAnyChange() - подумай почему неправильно используется этот метод.
             if (isAnyChange() != null) {
                 sendResult(Activity.RESULT_OK, isAnyChange())
                 activity.supportFragmentManager.popBackStack()
@@ -82,6 +88,7 @@ class NewBookFragment : Fragment() {
         }
         android.R.id.home -> {
             AlertDialog.Builder(activity)
+                    // TODO: Выноси строки в ресурсы.
                     .setMessage("Discard all changes?")
                     .setPositiveButton(R.string.erase, { _, _ -> activity.supportFragmentManager.popBackStack() })
                     .setNegativeButton(R.string.cancel, { _, _ -> })
@@ -92,9 +99,12 @@ class NewBookFragment : Fragment() {
     }
 
     private fun isAnyChange(): Book? {
+        // TODO: 1-е лишние вызовы findViewById
+        // TODO: 2-е использование unsafe unwrap - view!!
         val title = view!!.findViewById<EditText>(R.id.editText_title_book).text.toString()
         val author = view!!.findViewById<EditText>(R.id.editText_author_book).text.toString()
         val date = textViewDate.text.toString().toDate(MMM_D_YYYY)
+        // TODO: Лучше не делать такие сокращения, переменные должны четко отображать их смысл
         val pub = view!!.findViewById<EditText>(R.id.editText_publication_book).text.toString()
         val des = view!!.findViewById<EditText>(R.id.editText_description_book).text.toString()
         return when {

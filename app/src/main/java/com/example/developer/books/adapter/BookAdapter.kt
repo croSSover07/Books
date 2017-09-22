@@ -12,6 +12,8 @@ class BookAdapter(listener: ItemClickListener?, items: List<Book>?) : BaseAdapte
 
     override fun onBindViewHolder(holder: BookItemViewHolder, position: Int, item: Book) {
         holder.txtTitle.text = item.title
+        // TODO: Исправь с использованием строки с форматом.
+        // для получения Context можешь взять holder.itemView.context
         holder.txtDate.text = item.date.toString(MMM_D_YYYY) + " && " + item.publication
         holder.txtAuthor.text = item.author
     }
