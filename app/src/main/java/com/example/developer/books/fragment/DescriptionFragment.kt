@@ -33,10 +33,11 @@ class DescriptionFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        menu?.clear()
         if (this.activity.findViewById<View>(R.id.main_frame_layout) == null) {
-            (activity as AppCompatActivity).supportActionBar?.title = (arguments[KEY_BOOK] as Book).title
-            (activity as AppCompatActivity).supportActionBar?.subtitle = (arguments[KEY_BOOK] as Book).author
+            if (activity.currentFocus == null) {
+                (activity as AppCompatActivity).supportActionBar?.title = (arguments[KEY_BOOK] as Book).title
+                (activity as AppCompatActivity).supportActionBar?.subtitle = (arguments[KEY_BOOK] as Book).author
+            }
         }
     }
 
