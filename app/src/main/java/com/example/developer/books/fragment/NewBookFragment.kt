@@ -7,9 +7,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.*
-import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import com.example.developer.books.R
 import com.example.developer.books.extension.MMM_D_YYYY
 import com.example.developer.books.extension.toDate
@@ -17,9 +15,10 @@ import com.example.developer.books.extension.toString
 import com.example.developer.books.model.Book
 import java.util.*
 
+
 class NewBookFragment : Fragment() {
 
-    private lateinit var textViewDate: TextView
+    private lateinit var textViewDate: EditText
 
     companion object {
         private const val DIALOG_DATE = "DialogDate"
@@ -34,8 +33,8 @@ class NewBookFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        textViewDate = view.findViewById(R.id.textView_date)
-        view.findViewById<Button>(R.id.button_date).setOnClickListener {
+        textViewDate = view.findViewById(R.id.editText_date)
+        textViewDate.setOnClickListener {
             val fm = fragmentManager
             val dialog = DatePickerFragment.newInstance()
             dialog.setTargetFragment(this@NewBookFragment, REQUEST_DATE)
@@ -57,7 +56,7 @@ class NewBookFragment : Fragment() {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         val date = data.getSerializableExtra(DatePickerFragment.EXTRA_DATE) as? Date ?: return
-                        textViewDate.text = date.toString(MMM_D_YYYY)
+                        textViewDate.setText(date.toString(MMM_D_YYYY))
                     }
                 }
             }

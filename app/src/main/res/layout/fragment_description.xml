@@ -7,8 +7,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@string/description_book" />
+        android:fontFamily="sans-serif"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:text="@string/description_book"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,7 +28,10 @@
                 android:id="@+id/textView_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp" />
+                android:fontFamily="sans-serif"
+                android:padding="16dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
         </LinearLayout>
 
     </ScrollView>
