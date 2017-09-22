@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -14,6 +15,7 @@ import com.example.developer.books.adapter.BaseAdapter
 import com.example.developer.books.adapter.BookAdapter
 import com.example.developer.books.model.Book
 import java.util.*
+
 
 class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
 
@@ -41,6 +43,7 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = bookAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, LinearLayoutManager(context).orientation))
         setHasOptionsMenu(true)
     }
 
