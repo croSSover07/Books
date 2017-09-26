@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.example.developer.books.MainActivity
 import com.example.developer.books.R
+import com.example.developer.books.activity.NewBookActivity
 import com.example.developer.books.adapter.BaseAdapter
 import com.example.developer.books.adapter.BookAdapter
 import com.example.developer.books.model.Book
@@ -20,15 +21,13 @@ import java.util.*
 class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
-
     private lateinit var bookAdapter: BookAdapter
-
     private val mainActivity: MainActivity? get() = activity as? MainActivity
 
     companion object {
-        private const val REQUEST_BOOK = 0
-        const val TAG = "BookListFragment"
+        const val REQUEST_BOOK = 0
         const val KEY_ITEMS = "key_items"
+        val TAG = "BookListFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +36,7 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_book_list, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.book_list_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,13 +46,17 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL))
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             BookListFragment.REQUEST_BOOK -> {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
-                        val book = data.extras[NewBookFragment.EXTRA_BOOK] as? Book ?: return
-                        bookAdapter.addBook(book, false)
+                        val book = data?.extras?.get(NewBookActivity.EXTRA_BOOK) as Book
+                        bookAdapter.addBook(book, true)
+                    }
+                    Activity.RESULT_CANCELED -> {
+                        bookAdapter.notifyDataSetChanged()
                     }
                 }
             }
@@ -61,27 +64,18 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_options, menu)
-        // TODO: Для чего данный вызов notifyDataSetChanged?
-         bookAdapter.notifyDataSetChanged()
-    }
-
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.menu_add_book).isVisible = true
-        menu.findItem(R.id.save_button).isVisible=false
-        val appCompatActivity=mainActivity as AppCompatActivity
+        menu.findItem(R.id.save_button).isVisible = false
+        val appCompatActivity = mainActivity as AppCompatActivity
         appCompatActivity.supportActionBar?.setTitle(R.string.title_books_list_fragment)
         appCompatActivity.supportActionBar?.subtitle = null
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menu_add_book -> {
-            val fragment = NewBookFragment.newInstance()
-            fragment.setTargetFragment(this@BookListFragment, REQUEST_BOOK)
-            mainActivity?.replaceMainFragment(fragment, true, NewBookFragment.TAG)
+            startActivityForResult(Intent(mainActivity, NewBookActivity::class.java), BookListFragment.REQUEST_BOOK)
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -94,7 +88,6 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
 
     override fun onItemClick(position: Int) {
         val book = bookAdapter.items[position]
-        val fragment = DescriptionFragment.newInstance(book)
-        mainActivity?.replaceMainFragment(fragment, true, DescriptionFragment.TAG)
+        mainActivity?.replaceMainFragment(DescriptionFragment.newInstance(book), true, DescriptionFragment.TAG)
     }
 }

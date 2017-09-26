@@ -5,12 +5,15 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.TextView
+import com.example.developer.books.MainActivity
 import com.example.developer.books.R
 import com.example.developer.books.model.Book
 
 class DescriptionFragment : Fragment() {
+    var book: Book? = null
+
     companion object {
-        private const val KEY_BOOK = "key_book"
+        internal const val KEY_BOOK = "key_book"
         const val TAG = "DescriptionFragment"
 
         fun newInstance(book: Book): DescriptionFragment {
@@ -24,34 +27,45 @@ class DescriptionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        book = arguments[KEY_BOOK] as Book
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_description, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_description, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<TextView>(R.id.textView_description).text = (arguments[KEY_BOOK] as Book).description
+        val text = view.findViewById<TextView>(R.id.textView_description)
+        text.text = book?.description
     }
+
 
     override fun onPrepareOptionsMenu(menu: Menu?) {
         super.onPrepareOptionsMenu(menu)
-        if (this.activity.findViewById<View>(R.id.main_frame_layout) == null) {
-            if (activity.currentFocus == null) {
-                val appCompatActivity=activity as AppCompatActivity
-                appCompatActivity.supportActionBar?.title = (arguments[KEY_BOOK] as Book).title
-                appCompatActivity.supportActionBar?.subtitle = (arguments[KEY_BOOK] as Book).author
-            }
+        val twoPane = (activity as MainActivity).twoPane
+        if (!twoPane) {
+            val appCompatActivity = activity as AppCompatActivity
+            appCompatActivity.supportActionBar?.title = book?.title
+            appCompatActivity.supportActionBar?.subtitle = book?.author
+            menu?.findItem(R.id.menu_add_book)?.isVisible = false
+            menu?.findItem(R.id.save_button)?.isVisible = false
         }
+        else{
+            val appCompatActivity = activity as AppCompatActivity
+            appCompatActivity.supportActionBar?.setTitle(R.string.title_books_list_fragment)
+            appCompatActivity.supportActionBar?.subtitle = null
+            menu?.findItem(R.id.menu_add_book)?.isVisible = true
+            menu?.findItem(R.id.save_button)?.isVisible = false
+        }
+//
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-
         android.R.id.home -> {
-            activity.supportFragmentManager.popBackStack()
+            fragmentManager.popBackStack()
             true
         }
         else -> super.onOptionsItemSelected(item)
     }
+
 }
