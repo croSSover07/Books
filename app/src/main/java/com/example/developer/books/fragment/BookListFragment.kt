@@ -47,15 +47,10 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        TODO: Для чего тут вызов super?
-//        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             BookListFragment.REQUEST_BOOK -> {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
-//                        TODO: Поскольку data Optional, нельзя написать в конце as Book, потому как елси там будет null вылетит NPE, так же используем метод getParcelable, так как наш объект Book реализует Parcelable
-//                        val book = data?.extras?.get(NewBookActivity.EXTRA_BOOK) as Book
-//                        bookAdapter.addBook(book, true)
                         val book: Book = data?.extras?.getParcelable(NewBookActivity.EXTRA_BOOK) ?: return
                         bookAdapter.addBook(book, true)
                     }
@@ -72,12 +67,6 @@ class BookListFragment : Fragment(), BaseAdapter.ItemClickListener {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.menu_add_book).isVisible = true
         menu.findItem(R.id.save_button).isVisible = false
-
-//      TODO: Двойная проверка supportActionBar?
-//        val appCompatActivity = mainActivity as AppCompatActivity
-//        appCompatActivity.supportActionBar?.setTitle(R.string.title_books_list_fragment)
-//        appCompatActivity.supportActionBar?.subtitle = null
-
         val appCompatActivity = mainActivity as? AppCompatActivity
         appCompatActivity?.supportActionBar?.apply {
             setTitle(R.string.title_books_list_fragment)

@@ -10,21 +10,19 @@ import com.example.developer.books.fragment.DescriptionFragment
 import com.example.developer.books.model.Book
 
 class MainActivity : BaseActivity() {
-//  TODO: Булевые переменные лучше именовать с префиксом `is` -> isTwoPane
-    var twoPane: Boolean = false
+    var isTwoPane: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        twoPane = findViewById(R.id.book_description_container) != null
+        isTwoPane = findViewById(R.id.book_description_container) != null
 
         val descriptionFragment = supportFragmentManager.findFragmentByTag(DescriptionFragment.TAG)
         val bookListFragment = supportFragmentManager.findFragmentByTag(BookListFragment.TAG)
 
-        // TODO: Слишком много when, тут везде используется when там где етсь только 2 варианта и можно обойтить обычным if
         when {
-            twoPane -> when {
+            isTwoPane -> when {
                 descriptionFragment != null -> {
                     supportFragmentManager.beginTransaction().remove(descriptionFragment).remove(bookListFragment).commit()
                     supportFragmentManager.executePendingTransactions()
@@ -47,7 +45,7 @@ class MainActivity : BaseActivity() {
                     supportFragmentManager.beginTransaction().remove(descriptionFragment).remove(bookListFragment).commit()
                     supportFragmentManager.executePendingTransactions()
                     replaceFragment(R.id.frame_layout, bookListFragment, false, BookListFragment.TAG)
-                    replaceFragment(R.id.frame_layout, descriptionFragment, true, BookListFragment.TAG)
+                    replaceFragment(R.id.frame_layout, descriptionFragment, true, DescriptionFragment.TAG)
                 }
                 else -> when {
                     bookListFragment != null -> {
@@ -60,14 +58,9 @@ class MainActivity : BaseActivity() {
             }
         }
     }
-// TODO: нет необходимости, мы получаем значение для twoPane в onCreate и оно не поменяется.
-//    override fun onResume() {
-//        twoPane = findViewById(R.id.book_description_container) != null
-//        super.onResume()
-//    }
 
     fun replaceMainFragment(fragment: Fragment, addToBackStack: Boolean = false, backStackName: String? = null) {
-        if (twoPane) {
+        if (isTwoPane) {
             if (backStackName == DescriptionFragment.TAG) {
                 replaceFragment(R.id.book_description_container, fragment, false, backStackName)
             } else {
@@ -76,6 +69,11 @@ class MainActivity : BaseActivity() {
         } else {
             replaceFragment(R.id.frame_layout, fragment, addToBackStack, backStackName)
         }
+    }
+
+    override fun onResume() {
+        isTwoPane = findViewById(R.id.book_description_container) != null
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

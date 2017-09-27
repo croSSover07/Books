@@ -59,56 +59,17 @@ class NewBookActivity : AppCompatActivity() {
         textViewDescription = findViewById(R.id.editText_description_book) as EditText
     }
 
-//    TODO: menu не будет optional.
-//    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-//        super.onPrepareOptionsMenu(menu)
-//        menu?.findItem(R.id.menu_add_book)?.isVisible = false
-//        menu?.findItem(R.id.save_button)?.isVisible = true
-//    TODO: Дважды выполняется проверка
-//        supportActionBar?.setTitle(R.string.title_new_book_fragment)
-//        supportActionBar?.subtitle = null
-//        return true
-//    }
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.menu_add_book)?.isVisible = false
         menu.findItem(R.id.save_button)?.isVisible = true
-
-//        TODO: Двойную проверку можно обойти так:
-//        val supportActionBar = supportActionBar
-//        if (supportActionBar != null) {
-//            supportActionBar.setTitle(R.string.title_new_book_fragment)
-//            supportActionBar.subtitle = null
-//        }
-
-        // TODO: Но в kotlin есть такие вот удобные вещи как apply, let, etc.
         supportActionBar?.apply {
             setTitle(R.string.title_new_book_fragment)
             subtitle = null
         }
-
         return true
     }
 
-//    TODO: Желательно не перемешивать методы и группировать их.
-//    private fun setBookResult(book: Book) {
-//        setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_BOOK, book))
-//    }
-
-/*
-      TODO: Не перемешивать имеется ввиду что бы группа методов с Menu не смешивалась с другмим методами, а так же выдерживать хронологи вызовов:
-      onCreateOptionsMenu -
-      -- setBookResult -- Этот метод лучше перенести после методов связанных с Menu
-      onCreateOptionsMenu
-      onOptionsItemSelected
-
-      TODO: Хронология вызовов такая:
-      onCreateOptionsMenu
-      onCreateOptionsMenu
-      onOptionsItemSelected
-*/
-
-    //    TODO: menu не будет optional.
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_options, menu)
         return super.onCreateOptionsMenu(menu)
@@ -116,17 +77,14 @@ class NewBookActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.save_button -> {
-            val book = isAnyChange()
+            val book = newBook()
             if (book != null) {
                 setBookResult(book)
-//                TODO: лучше будет вызывать finish()
-//                super.onBackPressed()
                 finish()
             }
             true
         }
         android.R.id.home -> {
-            // TODO: За диалог ++.
             AlertDialog.Builder(this@NewBookActivity)
                     .setMessage(getString(R.string.alert_question))
                     .setPositiveButton(R.string.erase, { _, _ ->
@@ -144,8 +102,7 @@ class NewBookActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_BOOK, book))
     }
 
-    // TODO: именвоание методов, думаю его лучше назвать "newBook", префикс `is` обычно используется для методов и переменных возвращающих булевый результат true/false
-    private fun isAnyChange(): Book? {
+    private fun newBook(): Book? {
         val title = textViewTitle.text.toString()
         val author = textViewAuthor.text.toString()
         val date = textViewDate.text.toString().toDate(MMM_D_YYYY)
