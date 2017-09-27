@@ -71,11 +71,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun onResume() {
-        isTwoPane = findViewById(R.id.book_description_container) != null
-        super.onResume()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_options, menu)
         return super.onCreateOptionsMenu(menu)
