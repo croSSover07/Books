@@ -10,14 +10,19 @@ import com.example.developer.books.fragment.DescriptionFragment
 import com.example.developer.books.model.Book
 
 class MainActivity : BaseActivity() {
+//  TODO: Булевые переменные лучше именовать с префиксом `is` -> isTwoPane
     var twoPane: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         twoPane = findViewById(R.id.book_description_container) != null
+
         val descriptionFragment = supportFragmentManager.findFragmentByTag(DescriptionFragment.TAG)
         val bookListFragment = supportFragmentManager.findFragmentByTag(BookListFragment.TAG)
+
+        // TODO: Слишком много when, тут везде используется when там где етсь только 2 варианта и можно обойтить обычным if
         when {
             twoPane -> when {
                 descriptionFragment != null -> {
@@ -54,13 +59,12 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
-
     }
-
-    override fun onResume() {
-        twoPane = findViewById(R.id.book_description_container) != null
-        super.onResume()
-    }
+// TODO: нет необходимости, мы получаем значение для twoPane в onCreate и оно не поменяется.
+//    override fun onResume() {
+//        twoPane = findViewById(R.id.book_description_container) != null
+//        super.onResume()
+//    }
 
     fun replaceMainFragment(fragment: Fragment, addToBackStack: Boolean = false, backStackName: String? = null) {
         if (twoPane) {

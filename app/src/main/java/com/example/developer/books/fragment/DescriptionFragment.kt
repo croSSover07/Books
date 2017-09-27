@@ -40,24 +40,42 @@ class DescriptionFragment : Fragment() {
     }
 
 
-    override fun onPrepareOptionsMenu(menu: Menu?) {
+    // TODO: menu не будет Optional
+    override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        val twoPane = (activity as MainActivity).twoPane
-        if (!twoPane) {
-            val appCompatActivity = activity as AppCompatActivity
-            appCompatActivity.supportActionBar?.title = book?.title
-            appCompatActivity.supportActionBar?.subtitle = book?.author
-            menu?.findItem(R.id.menu_add_book)?.isVisible = false
-            menu?.findItem(R.id.save_button)?.isVisible = false
+//      TODO: Вообще в условии сильно много повторяемого кода!!!
+//        val twoPane = (activity as MainActivity).twoPane
+//        if (!twoPane) {
+//            val appCompatActivity = activity as AppCompatActivity
+//            appCompatActivity.supportActionBar?.title = book?.title
+//            appCompatActivity.supportActionBar?.subtitle = book?.author
+//            menu.findItem(R.id.menu_add_book)?.isVisible = false
+//            menu.findItem(R.id.save_button)?.isVisible = false
+//        TODO: Ну что это за запись такая то
+//        }
+//        else{
+//        } else {
+//            val appCompatActivity = activity as AppCompatActivity
+//            appCompatActivity.supportActionBar?.setTitle(R.string.title_books_list_fragment)
+//            appCompatActivity.supportActionBar?.subtitle = null
+//            menu.findItem(R.id.menu_add_book)?.isVisible = true
+//            menu.findItem(R.id.save_button)?.isVisible = false
+//        }
+
+//      TODO: вот эти операции, лучше выполнять в onStart не в onPrepareOptionsMenu
+        val mainActivity = activity as? MainActivity ?: return
+        mainActivity.supportActionBar?.apply {
+            if (mainActivity.twoPane) {
+                title = book?.title
+                subtitle = book?.author
+            } else {
+                setTitle(R.string.title_books_list_fragment)
+                subtitle = null
+            }
         }
-        else{
-            val appCompatActivity = activity as AppCompatActivity
-            appCompatActivity.supportActionBar?.setTitle(R.string.title_books_list_fragment)
-            appCompatActivity.supportActionBar?.subtitle = null
-            menu?.findItem(R.id.menu_add_book)?.isVisible = true
-            menu?.findItem(R.id.save_button)?.isVisible = false
-        }
-//
+
+        menu.findItem(R.id.menu_add_book)?.isVisible = mainActivity.twoPane
+        menu.findItem(R.id.save_button)?.isVisible = false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
